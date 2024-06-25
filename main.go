@@ -174,7 +174,7 @@ func validateCell(cell, dataType string) bool {
 			match, _ := regexp.MatchString(`^[a-zA-Z0-9\s,.'-]+$`, cell)
 			return match
 		case "phone":
-			match, _ := regexp.MatchString(`^[0-9]{10}$`, cell)
+			match, _ := regexp.MatchString(`^\+?[0-9]{1,3}?[0-9]{10}$`, cell)
 			return match
 		default:
 			return false
