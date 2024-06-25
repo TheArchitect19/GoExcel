@@ -84,14 +84,12 @@ func createExcelHandler(c *fiber.Ctx) error {
     return c.Download(filename, filename)
 }
 
-
-
 func validator(c *fiber.Ctx) error {
 	form, err := c.MultipartForm()
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString("Failed to parse form")
 	}
-
+	fmt.Println(form)
 	fileHeader := form.File["file"][0]
 	file, err := fileHeader.Open()
 	if err != nil {
@@ -170,7 +168,7 @@ func validateCell(cell, dataType string) bool {
 			_, err := strconv.Atoi(cell)
 			return err == nil
 		case "name":
-			match, _ := regexp.MatchString(`^[a-zA-Z]+$`, cell)
+			match, _ := regexp.MatchString(`^[a-zA-Z\s]+$`, cell)
 			return match
 		case "address":
 			match, _ := regexp.MatchString(`^[a-zA-Z0-9\s,.'-]+$`, cell)
